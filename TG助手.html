@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram 中文版 - 避开 SMSfee 验证</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0088cc;
+            --secondary: #179cde;
+            --success: #31d158;
+            --warning: #ff9500;
+            --danger: #ff3b30;
+            --dark: #1c1c1e;
+            --card-bg: #ffffff;
+            --body-bg: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border: #d2d2d7;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --card-bg: #1c1c1e;
+                --body-bg: #000000;
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --border: #38383a;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--body-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .navbar {
+                background: rgba(28,28,30,0.8);
+            }
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--body-bg) 0%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,136,204,0.1) 0%, transparent 70%);
+            animation: pulse 10s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0,136,204,0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,136,204,0.2);
+        }
+        
+        .badge::before {
+            content: '●';
+            color: var(--success);
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-problem {
+            background: rgba(255,59,48,0.1);
+            border: 1px solid rgba(255,59,48,0.2);
+            color: var(--danger);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,136,204,0.3);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,136,204,0.4);
+        }
+        
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(0,136,204,0.2) 0%, rgba(0,136,204,0.2) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        
+        .steps {
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .steps-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% - 30px);
+            background: var(--border);
+        }
+        
+        .step-number {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        
+        .step-content {
+            flex: 1;
+            background: var(--body-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        
+        .step-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .step-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .highlights {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,136,204,0.1), rgba(23,156,222,0.05));
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .highlight-box h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .highlight-list {
+            list-style: none;
+        }
+        
+        .highlight-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .highlight-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .reward-box {
+            background: linear-gradient(135deg, rgba(255,149,0,0.1), rgba(255,59,48,0.05));
+            border: 2px solid var(--warning);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .reward-box h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--warning);
+        }
+        
+        .reward-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--warning);
+            margin: 1rem 0;
+        }
+        
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; gap: 1rem; }
+            .step:not(:last-child)::after { display: none; }
+        }
+        
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">✈️</div>
+                <span>Telegram 中文版</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">核心功能</a>
+                <a href="#steps">使用教程</a>
+                <a href="#highlights">产品优势</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">已帮助 10,000+ 用户解决登录问题</div>
+            <h1>避开 SMSfee 验证<br>两分钟重回纸飞机</h1>
+            <p class="hero-subtitle">
+                账号退出、切换或更新后无法登录？<br>
+                Telegram 中文版帮你彻底解决收不到验证码的困扰
+            </p>
+            <div class="hero-problem">
+                ⚠️ 传统方式：触发 SMSfee 验证 → 无法接收验证码 → 账号永久丢失
+            </div>
+            <a href="#steps" class="cta-button">立即查看解决方案 →</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">核心功能特性</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🇨🇳</div>
+                <h3>全中文界面</h3>
+                <p><span class="highlight">100% 原生中文界面</span>，无需汉化补丁，打开即用。让您使用起来毫无障碍，体验流畅的中文操作环境。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>设备码直登</h3>
+                <p>修复收不到验证码、无法登录等问题，<span class="highlight">自动接收验证码</span>，确保您能顺利登录使用，告别 SMSfee 困扰。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>官方 MTProto 高速通道</h3>
+                <p>采用官方内置 MTProto 高速通道，<span class="highlight">无需魔法，稳定直连</span>，不触发风控，号码更安全，登录更放心。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎖️</div>
+                <h3>精养成品老号</h3>
+                <p>提供多国号码选择，<span class="highlight">一键购买，即买即用</span>。精养账号，安全稳定，避免新号风控问题。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps" id="steps">
+        <div class="steps-container">
+            <h2 class="section-title">简单六步，轻松登录</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>购买成品号</h3>
+                    <p>选择您需要的国家的号码，然后选择付款方式，点击底部立即支付按钮即可购买。</p>
+                    <span class="step-action">💡 付款时不要关闭支付弹窗</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>复制号码</h3>
+                    <p>付款成功后点击支付完成，会自动弹出您购买的号码，点击复制。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>登录成品号</h3>
+                    <p>不用选择国家码，在输入号码框的 + 号后边，直接粘贴您刚才复制的号码，点击下一步。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>获取验证码</h3>
+                    <p>在输入验证码界面，请点击「点击获取验证码」按钮，获取您的验证码。</p>
+                    <span class="step-action">🔔 验证码会自动弹窗显示</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>输入验证码</h3>
+                    <p>点击「点击获取验证码」按钮以后，验证码会自动弹窗显示，您复制验证码输入即可。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h3>登录成功</h3>
+                    <p>在两步验证界面点击「获取二次验证密码」按钮，获取二次验证密码，输入就可以成功登录了。</p>
+                    <span class="step-action">✅ 购买的成品直登号已成功登录</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="highlights" id="highlights">
+        <div class="highlight-box">
+            <h2>🌟 产品核心优势</h2>
+            <ul class="highlight-list">
+                <li><strong>内置官方 MTProto</strong> — 官方原生协议，高速通道直连，无需再打开任何魔法梯子</li>
+                <li><strong>原生中文支持</strong> — 无需翻译包，打开就是中文版，界面 100% 汉化</li>
+                <li><strong>即开即用</strong> — 无需魔法梯子，无需复杂设置，下载安装即可使用</li>
+                <li><strong>一键登录</strong> — 操作简单易上手，新手也能轻松搞定</li>
+                <li><strong>安全稳定</strong> — 不触发 SMSfee 风控，号码更安全，避免封号风险</li>
+            </ul>
+        </div>
+        <div class="reward-box">
+            <h2>🎁 邀请好友得奖励</h2>
+            <p>在「我的」页面找到邀请好友功能</p>
+            <div class="reward-amount">满 100 即可提现</div>
+            <p>奖励永久有效，好友每次订阅您都有奖励！<br>
+            <span style="color: var(--text-secondary); font-size: 0.9rem;">分享越多，收益越多，永久被动收入</span></p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#features">核心功能</a>
+            <a href="#steps">使用教程</a>
+            <a href="#highlights">产品优势</a>
+        </div>
+        <p>Telegram 中文版 · 让登录变得简单</p>
+        <p style="margin-top: 0.5rem; font-size: 0.875rem;">解决 SMSfee 验证问题，两分钟重回纸飞机</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
