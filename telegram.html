@@ -7,13 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00d4ff;
-            --secondary: #0088cc;
+            --primary: #0088cc;
+            --primary-light: #00d4ff;
+            --secondary: #0066aa;
             --accent: #ff6b35;
-            --dark: #0a0a0a;
-            --darker: #050505;
-            --card-bg: rgba(20, 20, 30, 0.6);
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-gray: #64748b;
+            --border-light: #e2e8f0;
+            --card-shadow: 0 4px 20px rgba(0, 136, 204, 0.08);
         }
 
         * {
@@ -24,8 +27,8 @@
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: var(--darker);
-            color: #fff;
+            background: var(--bg-light);
+            color: var(--text-dark);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -38,9 +41,9 @@
             height: 100%;
             z-index: -1;
             background: 
-                radial-gradient(ellipse at 20% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 136, 204, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 40%, rgba(255, 107, 53, 0.1) 0%, transparent 40%);
+                radial-gradient(ellipse at 20% 0%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(0, 136, 204, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
         }
 
         .grid-overlay {
@@ -51,45 +54,40 @@
             height: 100%;
             z-index: -1;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+                linear-gradient(rgba(0, 136, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 204, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(5, 5, 5, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .logo::before {
             content: "✈️";
-            font-size: 2rem;
+            font-size: 1.8rem;
             -webkit-text-fill-color: initial;
         }
 
@@ -100,11 +98,12 @@
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-gray);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
             position: relative;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
@@ -146,26 +145,26 @@
         }
 
         .hero-text h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 900;
-            line-height: 1.1;
+            line-height: 1.2;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 5s ease infinite;
+            color: var(--text-dark);
+            letter-spacing: -1px;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(20deg); }
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-text .subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.3rem;
+            color: var(--text-gray);
             margin-bottom: 30px;
-            font-weight: 300;
+            font-weight: 400;
+            line-height: 1.8;
         }
 
         .hero-text .highlight {
@@ -175,967 +174,101 @@
 
         .cta-group {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 18px 40px;
+            padding: 16px 35px;
             border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1rem;
+            font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
             cursor: pointer;
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 136, 204, 0.4);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: var(--bg-white);
             color: var(--primary);
             border: 2px solid var(--primary);
         }
 
         .btn-secondary:hover {
             background: var(--primary);
-            color: #000;
+            color: #fff;
         }
 
         .hero-visual {
             position: relative;
             perspective: 1000px;
+            display: flex;
+            justify-content: center;
         }
 
         .phone-mockup {
             width: 100%;
-            max-width: 400px;
-            height: 700px;
-            background: linear-gradient(145deg, rgba(30, 30, 40, 0.9), rgba(10, 10, 15, 0.95));
+            max-width: 320px;
+            height: 600px;
+            background: linear-gradient(145deg, #ffffff, #f0f4f8);
             border-radius: 40px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            padding: 20px;
+            border: 8px solid #e2e8f0;
+            padding: 15px;
             box-shadow: 
-                0 50px 100px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transform: rotateY(-15deg) rotateX(5deg);
-            transition: transform 0.5s;
+                0 30px 60px rgba(0, 136, 204, 0.15),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8);
+            transform: rotateY(-10deg) rotateX(5deg);
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: rotateY(-15deg) rotateX(5deg) translateY(0); }
-            50% { transform: rotateY(-15deg) rotateX(5deg) translateY(-20px); }
+            0%, 100% { transform: rotateY(-10deg) rotateX(5deg) translateY(0); }
+            50% { transform: rotateY(-10deg) rotateX(5deg) translateY(-15px); }
         }
 
         .phone-screen {
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 30px;
             overflow: hidden;
             position: relative;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(0, 136, 204, 0.1);
         }
 
         .phone-header {
             padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .chat-bubbles {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .bubble {
-            max-width: 80%;
-            padding: 15px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            animation: messagePop 0.5s ease backwards;
-        }
-
-        .bubble:nth-child(1) { animation-delay: 0.2s; }
-        .bubble:nth-child(2) { animation-delay: 0.4s; }
-        .bubble:nth-child(3) { animation-delay: 0.6s; }
-
-        @keyframes messagePop {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .bubble-in {
-            background: rgba(255, 255, 255, 0.1);
-            align-self: flex-start;
-            border-bottom-left-radius: 5px;
-        }
-
-        .bubble-out {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            align-self: flex-end;
-            border-bottom-right-radius: 5px;
-        }
-
-        .pain-points {
-            padding: 100px 5%;
-            background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.03), transparent);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        .pain-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .pain-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pain-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .pain-card:hover::before {
-            opacity: 1;
-        }
-
-        .pain-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .pain-card h3 {
-            color: var(--accent);
             font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
-        .pain-card p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.95rem;
-        }
-
-        .solutions {
-            padding: 100px 5%;
-        }
-
-        .solution-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .solution-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 25px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .solution-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 30px 60px rgba(0, 212, 255, 0.2);
-        }
-
-        .solution-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .solution-card:hover::after {
-            opacity: 1;
-        }
-
-        .solution-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(0, 212, 255, 0.1);
-            line-height: 1;
-        }
-
-        .solution-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            padding: 15px;
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 15px;
-        }
-
-        .solution-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .solution-card p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .tech-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(0, 212, 255, 0.2);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 15px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .tech-section {
-            padding: 100px 5%;
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.05), rgba(0, 212, 255, 0.05));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tech-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .tech-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tech-text p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .tech-features {
-            list-style: none;
-        }
-
-        .tech-features li {
-            padding: 15px 0;
-            padding-left: 40px;
-            position: relative;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .tech-features li::before {
-            content: "⚡";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .tech-visual {
-            position: relative;
-        }
-
-        .protocol-diagram {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 30px;
-            padding: 40px;
-            position: relative;
-        }
-
-        .connection-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .flow-step {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            border-left: 4px solid var(--primary);
-            animation: slideIn 0.5s ease backwards;
-        }
-
-        .flow-step:nth-child(1) { animation-delay: 0.1s; }
-        .flow-step:nth-child(2) { animation-delay: 0.2s; }
-        .flow-step:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .flow-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .flow-text h4 {
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .flow-text p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-        }
-
-        .arrow-down {
-            text-align: center;
-            color: var(--primary);
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
-        }
-
-        .steps-section {
-            padding: 100px 5%;
-        }
-
-        .steps-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .step-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 35px;
-            top: 80px;
-            width: 2px;
-            height: calc(100% - 30px);
-            background: linear-gradient(180deg, var(--primary), transparent);
-        }
-
-        .step-number {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #000;
-            flex-shrink: 0;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
-            z-index: 1;
-        }
-
-        .step-content {
-            flex: 1;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s;
-        }
-
-        .step-content:hover {
-            border-color: var(--primary);
-            transform: translateX(10px);
-        }
-
-        .step-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .step-content p {
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 15px;
-        }
-
-        .step-tip {
-            display: inline-block;
-            padding: 8px 15px;
-            background: rgba(255, 107, 53, 0.2);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 20px;
-            color: var(--accent);
-            font-size: 0.85rem;
-        }
-
-        .reward-section {
-            padding: 80px 5%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 212, 255, 0.05));
-            border-top: 1px solid rgba(255, 107, 53, 0.2);
-            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
-        }
-
-        .reward-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 30px;
-            padding: 50px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reward-card::before {
-            content: "🎁";
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 8rem;
-            opacity: 0.1;
-            transform: rotate(15deg);
-        }
-
-        .reward-card h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-
-        .reward-card p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        .reward-highlight {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent), #ffcc00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 20px 0;
-        }
-
-        .download-section {
-            padding: 120px 5%;
-            text-align: center;
-            position: relative;
-        }
-
-        .download-section::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
-            z-index: -1;
-        }
-
-        .download-section h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-
-        .download-section .subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 50px;
-        }
-
-        .download-btn {
-            display: inline-block;
-            padding: 25px 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            text-decoration: none;
-            border-radius: 60px;
-            font-size: 1.3rem;
-            font-weight: 800;
-            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.6);
-        }
-
-        .download-url {
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.9rem;
-        }
-
-        footer {
-            padding: 40px 5%;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 968px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .phone-mockup {
-                max-width: 300px;
-                height: 500px;
-                margin: 0 auto;
-            }
-
-            .tech-content {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .cta-group {
-                justify-content: center;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
-<body>
-    <div class="bg-animation"></div>
-    <div class="grid-overlay"></div>
-
-    <nav>
-        <div class="logo">Telegram中文版</div>
-        <ul class="nav-links">
-            <li><a href="#problem">问题</a></li>
-            <li><a href="#solution">方案</a></li>
-            <li><a href="#tech">技术</a></li>
-            <li><a href="#steps">教程</a></li>
-            <li><a href="#download">下载</a></li>
-        </ul>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>告别 SMSfee 验证困扰<br>重返纸飞机</h1>
-                <p class="subtitle">
-                    账号退登、换号或更新后触发验证？<br>
-                    <span class="highlight">Telegram中文版</span> 两分钟助您极速登录
-                </p>
-                <div class="cta-group">
-                    <a href="#download" class="btn btn-primary">立即下载 ⚡</a>
-                    <a href="#steps" class="btn btn-secondary">查看教程</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="phone-header">
-                            <div class="avatar">✈️</div>
-                            <div>
-                                <div style="font-weight: 700;">Telegram 中文版</div>
-                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">在线</div>
-                            </div>
-                        </div>
-                        <div class="chat-bubbles">
-                            <div class="bubble bubble-in">🎉 欢迎回来！已自动接收验证码</div>
-                            <div class="bubble bubble-out">终于不用等短信了！✅</div>
-                            <div class="bubble bubble-in">🚀 内置 MTProto 高速通道，即开即用</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pain-points" id="problem">
-        <h2 class="section-title">您是否遇到这些困扰？</h2>
-        <div class="pain-grid">
-            <div class="pain-card fade-in">
-                <span class="pain-icon">📵</span>
-                <h3>SMSfee 验证陷阱</h3>
-                <p>每次重新登录都触发短信验证，收不到验证码导致账号无法找回，重要消息全部丢失</p>
-            </div>
-            <div class="pain-card fade-in">
-                <span class="pain-icon">🚫</span>
-                <h3>连接频繁中断</h3>
-                <p>依赖第三方工具不稳定，时常掉线重连，关键时刻消息发不出去，商务沟通受影响</p>
-            </div>
-            <div class="pain-card fade-in">
-                <span class="pain-icon">😵</span>
-                <h3>界面英文难懂</h3>
-                <p>官方版全英文界面，找设置像迷宫，汉化补丁又担心安全问题，使用体验极差</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="solutions" id="solution">
-        <h2 class="section-title">六大核心优势 · 一站式解决</h2>
-        <div class="solution-grid">
-            <div class="solution-card fade-in">
-                <div class="solution-number">01</div>
-                <div class="solution-icon">🇨🇳</div>
-                <h3>100% 原生中文界面</h3>
-                <p>无需汉化补丁，打开即用。全界面深度中文化，从设置到聊天，每个细节都符合中文用户习惯，让您使用毫无障碍。</p>
-                <span class="tech-badge">零配置开箱</span>
-            </div>
-            <div class="solution-card fade-in">
-                <div class="solution-number">02</div>
-                <div class="solution-icon">📱</div>
-                <h3>设备码直登技术</h3>
-                <p>独家修复收不到验证码、无法登录等问题。自动接收验证码机制，确保您能顺利登录使用，告别 SMSfee 困扰。</p>
-                <span class="tech-badge">智能验证</span>
-            </div>
-            <div class="solution-card fade-in">
-                <div class="solution-number">03</div>
-                <div class="solution-icon">⚡</div>
-                <h3>官方 MTProto 高速通道</h3>
-                <p>采用 Telegram 创始人 Nikolai Durov 亲自设计的 MTProto 协议，内置高速通道直连，无需额外工具，稳定不触发风控。</p>
-                <span class="tech-badge">官方原生协议</span>
-            </div>
-            <div class="solution-card fade-in">
-                <div class="solution-number">04</div>
-                <div class="solution-icon">🔒</div>
-                <h3>端到端加密安全</h3>
-                <p>基于 MTProto 2.0 协议，采用 AES-256 加密算法，结合 DH 密钥交换机制，确保您的通讯内容只有对话双方可见。</p>
-                <span class="tech-badge">军工级加密</span>
-            </div>
-            <div class="solution-card fade-in">
-                <div class="solution-number">05</div>
-                <div class="solution-icon">🌍</div>
-                <h3>全球节点智能路由</h3>
-                <p>自动选择最优服务器节点，伪装成 HTTPS 流量特征，有效躲避 DPI 深度包检测，号码更安全，连接更稳定。</p>
-                <span class="tech-badge">抗封锁架构</span>
-            </div>
-            <div class="solution-card fade-in">
-                <div class="solution-number">06</div>
-                <div class="solution-icon">🚀</div>
-                <h3>即开即用零门槛</h3>
-                <p>下载安装后直接登录，无需复杂配置，无需额外工具，真正的一键直达。支持 iOS、Android、Windows、Mac 全平台。</p>
-                <span class="tech-badge">全平台支持</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="tech-section" id="tech">
-        <div class="tech-content">
-            <div class="tech-text fade-in">
-                <h2>MTProto 协议技术解析</h2>
-                <p>MTProto（Mobile Telecommunications Protocol）是 Telegram 专为移动设备设计的加密通讯协议，结合对称加密、非对称加密和哈希函数，实现端到端安全传输。</p>
-                <ul class="tech-features">
-                    <li>256位 AES-IGE 对称加密算法保护数据内容</li>
-                    <li>RSA 2048 位公钥加密进行身份验证</li>
-                    <li>Diffie-Hellman 密钥交换建立安全会话</li>
-                    <li>TLS 1.3 混淆技术伪装流量特征</li>
-                    <li>重放攻击保护机制防御 DDoS 攻击</li>
-                    <li>前向保密（Forward Secrecy）确保历史消息安全</li>
-                </ul>
-            </div>
-            <div class="tech-visual fade-in">
-                <div class="protocol-diagram">
-                    <div class="connection-flow">
-                        <div class="flow-step">
-                            <div class="flow-icon">📱</div>
-                            <div class="flow-text">
-                                <h4>您的设备</h4>
-                                <p>Telegram 中文版客户端</p>
-                            </div>
-                        </div>
-                        <div class="arrow-down">⬇</div>
-                        <div class="flow-step">
-                            <div class="flow-icon">🔐</div>
-                            <div class="flow-text">
-                                <h4>MTProto 加密层</h4>
-                                <p>AES-256 加密 + TLS 混淆</p>
-                            </div>
-                        </div>
-                        <div class="arrow-down">⬇</div>
-                        <div class="flow-step">
-                            <div class="flow-icon">🌐</div>
-                            <div class="flow-text">
-                                <h4>智能代理节点</h4>
-                                <p>伪装 HTTPS 流量，绕过检测</p>
-                            </div>
-                        </div>
-                        <div class="arrow-down">⬇</div>
-                        <div class="flow-step">
-                            <div class="flow-icon">☁️</div>
-                            <div class="flow-text">
-                                <h4>Telegram 云服务器</h4>
-                                <p>全球分布式数据中心</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="steps-section" id="steps">
-        <h2 class="section-title">四步极速登录指南</h2>
-        <div class="steps-container">
-            <div class="step-item fade-in">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>📥 下载安装</h3>
-                    <p>点击下方下载按钮获取 Telegram 中文版安装包，支持 Android、iOS、Windows、Mac 全平台。安装完成后打开应用。</p>
-                    <span class="step-tip">提示：认准官方 MTProto 内置版本</span>
-                </div>
-            </div>
-            <div class="step-item fade-in">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>🔑 选择登录方式</h3>
-                    <p><strong>新用户：</strong>直接输入手机号获取验证码<br>
-                       <strong>成品号用户：</strong>购买后复制号码，在输入框+号后直接粘贴，无需选择国家码</p>
-                    <span class="step-tip">关键：粘贴号码时保留+号前缀</span>
-                </div>
-            </div>
-            <div class="step-item fade-in">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>✅ 获取验证码</h3>
-                    <p>点击"获取验证码"按钮，系统将自动通过 MTProto 安全通道接收验证码并弹窗显示。复制验证码填入即可。</p>
-                    <span class="step-tip">如遇延迟，请检查网络连接</span>
-                </div>
-            </div>
-            <div class="step-item fade-in">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>🎉 完成登录</h3>
-                    <p>如有两步验证，点击"获取二次验证密码"获取密码输入。登录成功后即可看到全中文界面，无需任何翻译包！</p>
-                    <span class="step-tip">建议开启云端备份保护聊天记录</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="reward-section">
-        <div class="reward-card fade-in">
-            <h2>🎁 邀请好友得奖励</h2>
-            <p>在"我的"页面找到邀请功能，每成功邀请一位好友订阅，您都能获得现金奖励</p>
-            <div class="reward-highlight">满 100 元即可提现</div>
-            <p style="color: var(--primary); font-weight: 600;">奖励永久有效 · 好友每次订阅您都有收益</p>
-            <p style="font-size: 0.9rem; margin-top: 20px; opacity: 0.7;">帮助别人就是帮助自己！分享优质工具，双赢收益。</p>
-        </div>
-    </section>
-
-    <section class="download-section" id="download">
-        <h2>立即下载 Telegram 中文版</h2>
-        <p class="subtitle">内置官方 MTProto 高速通道 · 无需魔法 · 即开即用</p>
-        <a href="https://www.telegram.cn" target="_blank" class="download-btn">
-            🚀 立即访问 www.telegram.cn
-        </a>
-        <p class="download-url">官方下载网址：www.telegram.cn</p>
-        <p style="margin-top: 40px; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
-            100% 原生中文 · 自动接收验证码 · 官方 MTProto 协议 · 安全直连
-        </p>
-    </section>
-
-    <footer>
-        <p>© 2026 Telegram 中文版 | 基于官方 MTProto 协议构建 | 安全通讯 · 极速体验</p>
-        <p style="margin-top: 10px; font-size: 0.8rem;">本页面仅供技术交流学习，请遵守当地法律法规使用</p>
-    </footer>
-
-    <script>
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.style.background = 'rgba(5, 5, 5, 0.95)';
-            } else {
-                nav.style.background = 'rgba(5, 5, 5, 0.8)';
-            }
-            
-            lastScroll = currentScroll;
-        });
-    </script>
-</body>
-</html>
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0
