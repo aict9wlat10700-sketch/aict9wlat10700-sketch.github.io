@@ -1,0 +1,1548 @@
+
+html_content = '''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram中文版 - 跳过SMS Fee终极方案</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --tg-blue: #0088cc;
+            --tg-dark: #1c1c1e;
+            --tg-light: #f5f5f7;
+            --accent: #34c759;
+            --warning: #ff9500;
+            --danger: #ff3b30;
+            --gradient-1: linear-gradient(135deg, #0088cc 0%, #00a8e8 100%);
+            --gradient-2: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+            --gradient-3: linear-gradient(135deg, #ff9500 0%, #ff6b00 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--tg-light);
+            color: var(--tg-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(0,136,204,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(0,168,232,0.1) 0%, transparent 40%);
+            animation: pulse-bg 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 40px 20px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge i {
+            color: var(--warning);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient-1);
+            color: #fff;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 10px 40px rgba(0,136,204,0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0,136,204,0.5);
+        }
+
+        .hero-cta i {
+            font-size: 1.2rem;
+        }
+
+        .hero-phone {
+            position: absolute;
+            right: 5%;
+            bottom: -5%;
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 40px;
+            border: 8px solid #3a3a3c;
+            box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            .hero-phone { display: block; }
+        }
+
+        .hero-phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+        }
+
+        .phone-header {
+            background: var(--tg-blue);
+            padding: 40px 20px 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .phone-header h3 {
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+
+        .phone-body {
+            padding: 20px;
+        }
+
+        .chat-bubble {
+            background: #e3f2fd;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #333;
+            animation: messagePop 0.5s ease;
+        }
+
+        .chat-bubble.sent {
+            background: var(--tg-blue);
+            color: #fff;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        @keyframes messagePop {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTION COMMON ===== */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(0,136,204,0.1);
+            color: var(--tg-blue);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== PROBLEM SECTION ===== */
+        .problem-section {
+            background: #fff;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-3);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .problem-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe8d6 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--warning);
+            margin-bottom: 24px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .problem-highlight {
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe8d6 100%);
+            border-radius: 24px;
+            padding: 40px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .problem-highlight-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-3);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .problem-highlight-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--danger);
+        }
+
+        .problem-highlight-content p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* ===== SOLUTION SECTION ===== */
+        .solution-section {
+            background: var(--gradient-2);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .solution-section .section-tag {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .solution-section .section-title {
+            color: #fff;
+        }
+
+        .solution-section .section-desc {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .solution-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        .solution-card .icon-wrap {
+            width: 72px;
+            height: 72px;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0,136,204,0.3);
+        }
+
+        .solution-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .solution-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== WHY SECTION ===== */
+        .why-section {
+            background: #fff;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .why-visual {
+            position: relative;
+        }
+
+        .why-phone-mockup {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 40px;
+            border: 8px solid #3a3a3c;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .why-phone-header {
+            background: var(--tg-blue);
+            padding: 40px 20px 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .why-phone-body {
+            background: #fff;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+
+        .feature-row i {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .feature-row div {
+            flex: 1;
+        }
+
+        .feature-row strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .feature-row span {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .why-content h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .why-content h2 span {
+            color: var(--tg-blue);
+        }
+
+        .why-content > p {
+            color: #666;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .why-list {
+            list-style: none;
+        }
+
+        .why-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .why-list li:last-child {
+            border-bottom: none;
+        }
+
+        .why-list .check {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .why-list h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .why-list p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ===== STEPS SECTION ===== */
+        .steps-section {
+            background: linear-gradient(180deg, #f8f9fa 0%, #fff 100%);
+        }
+
+        .steps-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps-timeline::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--tg-blue) 0%, var(--accent) 100%);
+            border-radius: 3px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border: 3px solid var(--tg-blue);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--tg-blue);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-content {
+            flex: 1;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #f0f0f0;
+        }
+
+        .step-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-content h3 i {
+            color: var(--tg-blue);
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .step-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe8d6 100%);
+            color: var(--warning);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            background: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--tg-blue);
+        }
+
+        .feature-card .icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ===== REWARD SECTION ===== */
+        .reward-section {
+            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reward-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,136,204,0.2) 0%, transparent 70%);
+        }
+
+        .reward-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            .reward-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .reward-text h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .reward-text h2 span {
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reward-text > p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .reward-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .reward-stat {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .reward-stat .number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .reward-stat .label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+        }
+
+        .reward-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reward-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .reward-card .trophy {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-3);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 auto 24px;
+            box-shadow: 0 10px 30px rgba(255,149,0,0.3);
+        }
+
+        .reward-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .reward-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .reward-card .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-3);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .reward-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,149,0,0.4);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: var(--gradient-1);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            color: var(--tg-blue);
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .cta-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1c1c1e;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--tg-blue);
+            text-decoration: none;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-section {
+            background: #f8f9fa;
+        }
+
+        .comparison-table {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #f0f0f0;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: var(--tg-dark);
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 24px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 24px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: #fafafa;
+        }
+
+        .check-green {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .cross-red {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 20px;
+            }
+            
+            .steps-timeline::before {
+                left: 24px;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.4rem;
+                border-radius: 18px;
+            }
+            
+            .step-item {
+                gap: 20px;
+            }
+            
+            .step-content {
+                padding: 20px;
+            }
+            
+            .reward-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-exclamation-triangle"></i>
+                2024下半年 Telegram 重大更新
+            </div>
+            <h1>告别 <span>SMS Fee</span><br>一键直登 Telegram</h1>
+            <p class="hero-subtitle">无需付费验证，无需科学上网，Telegram中文版让你零门槛畅享全球通讯</p>
+            <a href="https://www.telegram.baby" class="hero-cta" target="_blank">
+                <i class="fas fa-rocket"></i>
+                立即获取 Telegram 中文版
+            </a>
+        </div>
+        
+        <div class="hero-phone">
+            <div class="hero-phone-screen">
+                <div class="phone-header">
+                    <i class="fas fa-paper-plane" style="font-size:2rem;"></i>
+                    <h3>Telegram 中文版</h3>
+                </div>
+                <div class="phone-body">
+                    <div class="chat-bubble">
+                        <i class="fas fa-check-circle" style="color:var(--accent);"></i> 登录成功！
+                    </div>
+                    <div class="chat-bubble sent">
+                        完美跳过 SMS Fee <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        <i class="fas fa-globe" style="color:var(--tg-blue);"></i> 无需 VPN 即可使用
+                    </div>
+                    <div class="chat-bubble sent">
+                        中文界面，上手即用 <i class="fas fa-language"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROBLEM ===== -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">问题分析</div>
+                <h2 class="section-title">为什么你会遇到 SMS Fee？</h2>
+                <p class="section-desc">Telegram 从 2024 年下半年起针对高风险场景推出收费验证机制</p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>官方风控机制</h3>
+                    <p>当系统判定你的登录请求风险较高时，不再提供免费短信验证码，而是强制要求支付 SMS Fee 或订阅 Premium 才能继续。</p>
+                </div>
+                
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>万人骑共享 IP</h3>
+                    <p>市面上大多数 VPN 软件使用共享 IP，大量用户共用同一节点，频繁切换国家和 IP，极易被 Telegram 风控标记为高风险。</p>
+                </div>
+                
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>付费也无法解决</h3>
+                    <p>绝大多数情况下，即使你支付了 SMS Fee，问题依然存在！这是官方设限，不是付费就能跳过的普通验证。</p>
+                </div>
+            </div>
+            
+            <div class="problem-highlight fade-in">
+                <div class="problem-highlight-icon">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <div class="problem-highlight-content">
+                    <h3><i class="fas fa-exclamation-circle"></i> 重要提醒</h3>
+                    <p>SMS Fee 是 Telegram 官方针对高风险登录环境的风控限制，属于系统级设限，<strong>付费也无法真正解决</strong>。唯一的出路是换一个不会被风控的登录方式。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOLUTION ===== -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">解决方案</div>
+                <h2 class="section-title">Telegram 中文版 — 完美跳过 SMS Fee</h2>
+                <p class="section-desc">内置成品直登号 + MTProto 原生协议，无需 VPN，零门槛使用</p>
+            </div>
+            
+            <div class="solution-grid">
+                <div class="solution-card fade-in">
+                    <div class="icon-wrap">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>成品直登账号</h3>
+                    <p>内部集成多个国家的优质成品账号，直登模式从根本上规避 SMS Fee 验证，登录即成功，全程无异常风控。</p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="icon-wrap">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>MTProto 原生协议</h3>
+                    <p>采用 Telegram 官方原生 MTProto 协议线路，无需任何 VPN 或科学上网工具，稳定流畅，告别频繁断连。</p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="icon-wrap">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3>多国账号可选</h3>
+                    <p>平台涵盖英国、美国、新加坡等多个国家优质账号，安全稳定，可正常长期使用，满足不同场景需求。</p>
+                </div>
+                
+                <div class="solution-card fade-in">
+                    <div class="icon-wrap">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>原生中文界面</h3>
+                    <p>客户端默认中文界面，无需额外安装翻译包，所有功能一目了然，上手即用，零学习成本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHY ===== -->
+    <section class="why-section">
+        <div class="container">
+            <div class="why-grid">
+                <div class="why-visual fade-in">
+                    <div class="why-phone-mockup">
+                        <div class="why-phone-header">
+                            <i class="fas fa-paper-plane" style="font-size:1.5rem;"></i>
+                            <h3 style="font-size:0.9rem; margin-top:6px;">Telegram 中文版</h3>
+                        </div>
+                        <div class="why-phone-body">
+                            <div class="feature-row">
+                                <i class="fas fa-check"></i>
+                                <div>
+                                    <strong>跳过 SMS Fee</strong>
+                                    <span>成品号直登，无验证拦截</span>
+                                </div>
+                            </div>
+                            <div class="feature-row">
+                                <i class="fas fa-wifi"></i>
+                                <div>
+                                    <strong>无需 VPN</strong>
+                                    <span>MTProto 原生协议直连</span>
+                                </div>
+                            </div>
+                            <div class="feature-row">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <strong>安全稳定</strong>
+                                    <span>多国优质账号，长期使用</span>
+                                </div>
+                            </div>
+                            <div class="feature-row">
+                                <i class="fas fa-comment-dots"></i>
+                                <div>
+                                    <strong>中文界面</strong>
+                                    <span>无需翻译，上手即用</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="why-content fade-in">
+                    <h2>为什么选择 <span>Telegram 中文版</span>？</h2>
+                    <p>普通 VPN 方案问题层出不穷，而 Telegram 中文版从底层架构解决所有痛点，让你真正无忧使用。</p>
+                    
+                    <ul class="why-list">
+                        <li>
+                            <div class="check"><i class="fas fa-check"></i></div>
+                            <div>
+                                <h4>零验证登录</h4>
+                                <p>成品直登号直接跳过 SMS Fee，无需任何验证步骤</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check"><i class="fas fa-check"></i></div>
+                            <div>
+                                <h4>告别共享 IP</h4>
+                                <p>独立原生线路，不会被万人骑 IP 拖累风控评分</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check"><i class="fas fa-check"></i></div>
+                            <div>
+                                <h4>多支付方式</h4>
+                                <p>支持支付宝、银行卡、信用卡、USDT、TRX 等</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="check"><i class="fas fa-check"></i></div>
+                            <div>
+                                <h4>长期稳定</h4>
+                                <p>账号经过优化筛选，可正常长期使用无异常</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMPARISON ===== -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">对比分析</div>
+                <h2 class="section-title">Telegram 中文版 vs 普通 VPN 方案</h2>
+                <p class="section-desc">一目了然，看清差距</p>
+            </div>
+            
+            <div class="comparison-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>对比项</th>
+                            <th>普通 VPN 方案</th>
+                            <th style="color: var(--tg-blue);">Telegram 中文版</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SMS Fee 验证</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 频繁触发</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 完全跳过</td>
+                        </tr>
+                        <tr>
+                            <td><strong>是否需要 VPN</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 必须安装</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 无需任何工具</td>
+                        </tr>
+                        <tr>
+                            <td><strong>连接稳定性</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 频繁断连/卡顿</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 原生协议稳定流畅</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IP 风险等级</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 共享万人骑 IP</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 独立优质线路</td>
+                        </tr>
+                        <tr>
+                            <td><strong>中文界面</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 需手动安装翻译</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 默认中文</td>
+                        </tr>
+                        <tr>
+                            <td><strong>付费后效果</strong></td>
+                            <td class="cross-red"><i class="fas fa-times-circle"></i> 钱花了问题还在</td>
+                            <td class="check-green"><i class="fas fa-check-circle"></i> 一次付费永久解决</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STEPS ===== -->
+    <section class="steps-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">操作指南</div>
+                <h2 class="section-title">四步轻松登录</h2>
+                <p class="section-desc">简单到不可思议，全程只需几分钟</p>
+            </div>
+            
+            <div class="steps-timeline">
+                <div class="step-item fade-in">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-download"></i> 下载客户端</h3>
+                        <p>打开已下载完成的 Telegram 中文版客户端，点击「开始聊天」进入主界面。下载地址：<a href="https://www.telegram.baby" style="color:var(--tg-blue); font-weight:600;" target="_blank">www.telegram.baby</a></p>
+                    </div>
+                </div>
+                
+                <div class="step-item fade-in">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-shopping-cart"></i> 购买成品账号</h3>
+                        <p>选择「购买成品直登账号」，平台涵盖英国、美国、新加坡等多国优质账号。以英国号码为例，选中后提交付款，支持支付宝、银行卡、信用卡、USDT、TRX 等多种支付方式。</p>
+                        <div class="step-highlight">
+                            <i class="fas fa-lightbulb"></i>
+                            支付便捷灵活，秒级到账
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item fade-in">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-mobile-alt"></i> 复制登录号码</h3>
+                        <p>付款成功后获取专属登录手机号，一键复制。重点注意：需点击输入框加号后方区域进行粘贴，确认选择「是」，进入下一步验证流程。</p>
+                        <div class="step-highlight">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            务必按指定区域粘贴号码
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item fade-in">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-key"></i> 验证登录</h3>
+                        <p>点击「获取验证码」，将收到的验证码复制粘贴到对应输入框；如有二次登录密码，同样复制粘贴即可完成验证。全程操作完成后即可成功登录，默认中文界面，无需额外翻译包。</p>
+                        <div class="step-highlight">
+                            <i class="fas fa-check-circle"></i>
+                            登录成功，零 SMS Fee 拦截
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">核心功能</div>
+                <h2 class="section-title">登录后的强大体验</h2>
+                <p class="section-desc">不仅仅是跳过 SMS Fee，更是一套完整的 Telegram 使用方案</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-address-book"></i></div>
+                    <h3>联系人管理</h3>
+                    <p>完整的联系人导入、同步与管理功能</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-cog"></i></div>
+                    <h3>系统设置</h3>
+                    <p>隐私、通知、主题等全功能设置面板</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-user-circle"></i></div>
+                    <h3>个人资料</h3>
+                    <p>头像、昵称、简介等资料自由编辑</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-comments"></i></div>
+                    <h3>群组频道</h3>
+                    <p>加入无限群组与频道，获取全球资讯</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-lock"></i></div>
+                    <h3>端到端加密</h3>
+                    <p>Secret Chat 私密聊天，消息阅后即焚</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="icon"><i class="fas fa-cloud"></i></div>
+                    <h3>云端存储</h3>
+                    <p>无限云存储空间，文件永久保存</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REWARD ===== -->
+    <section class="reward-section">
+        <div class="container">
+            <div class="reward-content">
+                <div class="reward-text fade-in">
+                    <h2>邀请好友 <span>赚取奖励</span></h2>
+                    <p>在「我的」页面开启邀请好友赚奖励福利，好友每一次订阅，你都能持续获得收益。互惠共赢，奖励长期有效！</p>
+                    
+                    <div class="reward-stats">
+                        <div class="reward-stat">
+                            <div class="number">¥100</div>
+                            <div class="label">满额即可申请提现</div>
+                        </div>
+                        <div class="reward-stat">
+                            <div class="number">∞</div>
+                            <div class="label">好友每次订阅都有收益</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reward-visual fade-in">
+                    <div class="reward-card">
+                        <div class="trophy"><i class="fas fa-trophy"></i></div>
+                        <h3>邀请奖励计划</h3>
+                        <p>分享你的专属邀请链接，好友注册并订阅后，你将获得持续分成收益。满 100 元即可提现，奖励不设上限！</p>
+                        <a href="https://www.telegram.baby" class="btn" target="_blank">
+                            <i class="fas fa-gift"></i>
+                            立即参与
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>立即告别 SMS Fee 困扰</h2>
+            <p>下载 Telegram 中文版，体验零门槛、零验证、零风险的畅爽登录</p>
+            <div class="cta-buttons">
+                <a href="https://www.telegram.baby" class="cta-btn-primary" target="_blank">
+                    <i class="fas fa-download"></i>
+                    前往官网下载
+                </a>
+                <a href="https://www.telegram.baby" class="cta-btn-secondary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    www.telegram.baby
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>  Telegram 中文版 | 官方授权合作伙伴</p>
+        <p style="margin-top:8px;">访问官网：<a href="https://www.telegram.baby" target="_blank">www.telegram.baby</a></p>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>'''
+
+with open('/mnt/agents/output/telegram_chinese.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
