@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Как обойти SMS Fee в Telegram — Подробное руководство 2024</title>
+    <title>Обход SMS Fee Telegram — Боевое Руководство 2024</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --blood-red: #8B0000;
+            --soviet-red: #CC0000;
+            --steel-gray: #2C2C2C;
+            --iron-gray: #1a1a1a;
+            --gold: #D4AF37;
+            --frost-white: #E8E8E8;
+            --hammer-gold: #B8860B;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,416 +23,794 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Roboto Condensed', sans-serif;
+            background: var(--iron-gray);
+            color: var(--frost-white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        /* Анимация снега/пепла */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
         }
 
-        .header {
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Шапка — гербовый стиль */
+        .header-crest {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-bottom: 4px solid var(--soviet-red);
+            position: relative;
+            padding: 60px 20px 40px;
             text-align: center;
-            padding: 40px 20px;
-            color: white;
+            overflow: hidden;
         }
 
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        .header-crest::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--soviet-red) 0px,
+                var(--soviet-red) 40px,
+                var(--gold) 40px,
+                var(--gold) 80px
+            );
         }
 
-        .header .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .header-crest::after {
+            content: '⚔';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
 
-        .content-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        .header-crest h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--frost-white);
+            text-shadow: 
+                3px 3px 0px var(--blood-red),
+                -1px -1px 0px var(--gold);
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .warning-box {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            font-weight: 600;
+        .header-crest .subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
         }
 
-        .warning-box::before {
-            content: "⚠️ ";
-            font-size: 1.2rem;
+        .header-crest .motto {
+            font-style: italic;
+            color: #888;
+            margin-top: 20px;
+            font-size: 1rem;
+            letter-spacing: 2px;
         }
 
+        /* Контейнер */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Боевые карточки */
+        .war-card {
+            background: linear-gradient(145deg, #1f1f1f 0%, #151515 100%);
+            border: 2px solid #333;
+            border-left: 6px solid var(--soviet-red);
+            border-radius: 0;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .war-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 30px;
+            height: 30px;
+            border-top: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .war-card::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: -2px;
+            width: 30px;
+            height: 30px;
+            border-bottom: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Заголовки */
         h2 {
-            color: #667eea;
-            margin: 30px 0 15px 0;
-            font-size: 1.5rem;
-            border-left: 4px solid #667eea;
-            padding-left: 15px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--blood-red);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         h3 {
-            color: #764ba2;
-            margin: 20px 0 10px 0;
-            font-size: 1.2rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            color: var(--frost-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 4px solid var(--soviet-red);
         }
 
         p {
-            margin-bottom: 15px;
-            color: #555;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            color: #c0c0c0;
+            margin-bottom: 18px;
+            text-align: justify;
         }
 
-        .highlight {
-            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            color: #333;
+        /* Выделения */
+        .highlight-red {
+            color: var(--soviet-red);
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+        .highlight-gold {
+            color: var(--gold);
+            font-weight: 700;
         }
 
-        .feature-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
+        .strike {
+            text-decoration: line-through;
+            text-decoration-color: var(--soviet-red);
+            text-decoration-thickness: 3px;
+            opacity: 0.6;
         }
 
-        .feature-card h4 {
-            color: #667eea;
+        /* Боевое предупреждение */
+        .battle-warning {
+            background: linear-gradient(135deg, #4a0000 0%, #2a0000 100%);
+            border: 2px solid var(--blood-red);
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .battle-warning::before {
+            content: '☠';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--iron-gray);
+            padding: 0 10px;
+            font-size: 1.5rem;
+            color: var(--soviet-red);
+        }
+
+        .battle-warning p {
+            color: #ff9999;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin: 0;
+        }
+
+        /* Ссылка — боевой щит */
+        .shield-link {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 3px solid var(--gold);
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .shield-link::before,
+        .shield-link::after {
+            content: '✠';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .shield-link::before { left: 15px; }
+        .shield-link::after { right: 15px; }
+
+        .shield-link .label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             margin-bottom: 10px;
         }
 
-        .step-list {
-            counter-reset: step;
-            list-style: none;
+        .shield-link a {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            display: inline-block;
         }
 
-        .step-list li {
+        .shield-link a:hover {
+            color: #fff;
+            text-shadow: 0 0 20px var(--gold);
+            transform: scale(1.05);
+        }
+
+        /* Кнопка — боевой молот */
+        .war-btn {
+            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--frost-white);
+            background: linear-gradient(145deg, var(--blood-red) 0%, #5a0000 100%);
+            border: 2px solid var(--gold);
+            padding: 18px 50px;
+            text-decoration: none;
             position: relative;
-            padding-left: 60px;
-            margin-bottom: 25px;
-            min-height: 50px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
         }
 
-        .step-list li::before {
-            counter-increment: step;
-            content: counter(step);
+        .war-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .war-btn:hover::before {
+            left: 100%;
+        }
+
+        .war-btn:hover {
+            background: linear-gradient(145deg, #a00000 0%, var(--blood-red) 100%);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Сетка преимуществ — боевые жетоны */
+        .medal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .medal {
+            background: linear-gradient(145deg, #1a1a1a 0%, #111 100%);
+            border: 1px solid #333;
+            border-top: 4px solid var(--soviet-red);
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .medal:hover {
+            border-color: var(--gold);
+            box-shadow: 0 5px 25px rgba(212, 175, 55, 0.1);
+        }
+
+        .medal .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .medal h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .medal p {
+            font-size: 0.95rem;
+            color: #999;
+            margin: 0;
+        }
+
+        /* Шаги — боевые приказы */
+        .orders-list {
+            counter-reset: order;
+            list-style: none;
+            padding: 0;
+        }
+
+        .orders-list li {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 30px;
+            min-height: 60px;
+        }
+
+        .orders-list li::before {
+            counter-increment: order;
+            content: counter(order);
             position: absolute;
             left: 0;
             top: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(145deg, var(--blood-red) 0%, #5a0000 100%);
+            border: 2px solid var(--gold);
+            color: var(--frost-white);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
         }
 
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 10px 5px;
-            transition: transform 0.2s, box-shadow 0.2s;
+        .orders-list li strong {
+            font-family: 'Oswald', sans-serif;
+            color: var(--gold);
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        .orders-list li p {
+            margin: 8px 0 0;
+            font-size: 1rem;
         }
 
-        .download-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 15px 5px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.5);
-        }
-
-        .link-box {
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
+        /* Итог — боевой стяг */
+        .banner-final {
+            background: linear-gradient(135deg, #1a0505 0%, #0d0d0d 50%, #1a0505 100%);
+            border: 3px solid var(--blood-red);
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
             text-align: center;
-            border: 2px dashed #667eea;
         }
 
-        .link-box a {
-            color: #667eea;
-            font-weight: 700;
-            font-size: 1.3rem;
+        .banner-final::before {
+            content: '⚔ ⚔ ⚔';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--iron-gray);
+            padding: 0 20px;
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 10px;
+        }
+
+        .banner-final h2 {
+            justify-content: center;
+            border-bottom: none;
+            font-size: 2rem;
+        }
+
+        .banner-final p {
+            text-align: center;
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+
+        /* Подвал — кованая пластина */
+        .footer-plate {
+            background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%);
+            border-top: 4px solid var(--soviet-red);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .footer-plate::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--soviet-red) 0px,
+                var(--soviet-red) 40px,
+                var(--gold) 40px,
+                var(--gold) 80px
+            );
+        }
+
+        .footer-plate p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 5px 0;
+        }
+
+        .footer-plate a {
+            color: var(--gold);
             text-decoration: none;
-            word-break: break-all;
+            font-weight: 700;
         }
 
-        .link-box a:hover {
-            text-decoration: underline;
-        }
-
-        .summary-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-        }
-
-        .summary-box h2 {
-            color: white;
-            border-left-color: white;
-        }
-
-        .summary-box p {
-            color: rgba(255,255,255,0.9);
-        }
-
-        .tag {
-            display: inline-block;
-            background: #e0e7ff;
-            color: #667eea;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin: 5px 5px 5px 0;
-            font-weight: 600;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
+        /* Теги */
+        .tags {
             text-align: center;
             margin: 30px 0;
         }
 
-        .cta-section h3 {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .tag {
+            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            border: 1px solid #333;
+            padding: 6px 15px;
+            margin: 5px;
+            transition: all 0.3s;
         }
 
+        .tag:hover {
+            border-color: var(--soviet-red);
+            color: var(--soviet-red);
+        }
+
+        /* Разделитель */
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blood-red), var(--gold), var(--blood-red), transparent);
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '✠';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--iron-gray);
+            padding: 0 15px;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* Адаптив */
         @media (max-width: 600px) {
-            .header h1 {
-                font-size: 1.6rem;
+            .header-crest h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
             }
-            .content-card {
+            .header-crest .subtitle {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            .war-card {
                 padding: 20px;
             }
-            .feature-grid {
-                grid-template-columns: 1fr;
+            .orders-list li {
+                padding-left: 65px;
+            }
+            .shield-link a {
+                font-size: 1.3rem;
             }
         }
 
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
+        /* Пульсация */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1>🚀 Как обойти SMS Fee в Telegram</h1>
-            <p class="subtitle">Подробное руководство по использованию китайской версии Telegram для обхода проверки</p>
-        </div>
+    <!-- Частицы -->
+    <div class="particles" id="particles"></div>
 
-        <div class="content-card">
-            <div class="warning-box">
-                SMS Fee — это платный механизм, который Telegram ввёл во второй половине 2024 года для определённых регионов и рисковых сценариев. Оплата НЕ гарантирует получение кода подтверждения!
+    <!-- Шапка -->
+    <header class="header-crest">
+        <h1>ОБХОД SMS FEE TELEGRAM</h1>
+        <p class="subtitle">Боевое Руководство 2024</p>
+        <p class="motto">«Не отступать. Не сдаваться. Обойти любой ценой.»</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Боевое предупреждение -->
+        <div class="war-card">
+            <div class="battle-warning">
+                <p>SMS Fee — платная система проверки от Telegram, запущенная со второй половины 2024 года. Оплата НЕ гарантирует получение кода! Деньги уходят — проблема остаётся.</p>
             </div>
 
-            <div class="link-box">
-                <p style="margin-bottom: 10px; font-weight: 600; color: #764ba2;">🔗 Официальный сайт китайской версии Telegram:</p>
+            <!-- Щит со ссылкой -->
+            <div class="shield-link">
+                <div class="label">⚡ Официальный Арсенал ⚡</div>
                 <a href="https://www.telegram.baby" target="_blank">www.telegram.baby</a>
             </div>
+        </div>
 
-            <h2>📱 Что такое SMS Fee?</h2>
+        <!-- Что такое SMS Fee -->
+        <div class="war-card">
+            <h2>🔥 Что Такое SMS Fee?</h2>
             <p>
-                <span class="highlight">SMS Fee</span> — это платный механизм, который Telegram запустил во второй половине 2024 года, направленный на определённые регионы и сценарии входа с высоким риском. Когда система оценивает ваш запрос на вход как «высокорисковый», Telegram прекращает предоставление бесплатного SMS-кода подтверждения и вместо этого требует от вас оплатить сбор или подписаться на Telegram Premium на одну неделю в обмен на код подтверждения.
+                <span class="highlight-red">SMS Fee</span> — это платная система проверки от Telegram, запущенная со второй половины 2024 года для отдельных регионов и подозрительных сценариев входа. Когда система оценивает вашу попытку авторизации как <span class="highlight-gold">потенциально опасную</span>, бесплатные SMS-коды больше не выдаются.
             </p>
             <p>
-                <strong>Однако важно отметить:</strong> то, что вы заплатили, <span class="highlight">НЕ означает, что SMS Fee исчезнет!</span> В большинстве случаев вы потратили деньги, но проблема остаётся. Это ограничение, установленное политикой Telegram, поэтому его нельзя решить полностью — но мы вполне можем <strong>обойти (bypass)</strong> его!
+                Вместо этого вам предлагают внести оплату или оформить недельную подписку Telegram Premium, чтобы получить проверочный код.
             </p>
+            <p>
+                <strong class="highlight-red">Но есть важный момент:</strong> оплата далеко <span class="strike">не всегда</span> <span class="highlight-red">НИКОГДА НЕ</span> решает проблему SMS Fee. В подавляющем большинстве случаев <span class="highlight-gold">деньги тратятся, а ошибка верификации остаётся без изменений</span>.
+            </p>
+            <p>
+                Поскольку SMS Fee является <strong>официальным ограничением Telegram</strong>, обойти его стандартными методами невозможно. Но мы можем <span class="highlight-gold">легко избежать</span> этой блокировки, и для этого понадобится всего одна утилита — <span class="highlight-red">русифицированная версия Telegram</span>.
+            </p>
+        </div>
 
-            <h2>🛡️ Основные причины возникновения SMS Fee</h2>
-            <p>Помимо необходимости повторного входа в аккаунт, большая часть других причин связана с:</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>🔴 Общий IP VPN (Shared IP)</h4>
-                    <p>Большинство современных VPN-программ используют общие IP-адреса (shared IP), тысячи пользователей используют один и тот же IP-адрес.</p>
+        <!-- Причины -->
+        <div class="war-card">
+            <h2>⚔ Причины Поражения</h2>
+            <p>Многие пользователи постоянно сталкиваются с SMS Fee не только при повторном входе в аккаунт. Основная причина поражения — стандартные VPN-сервисы:</p>
+            
+            <div class="medal-grid">
+                <div class="medal">
+                    <span class="icon">🔴</span>
+                    <h4>Общие IP-Адреса</h4>
+                    <p>Тысячи людей используют один IP одновременно. Telegram мгновенно помечает такие адреса как высокорисковые.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>🔴 Постоянное переключение узлов</h4>
-                    <p>Постоянное переключение стран и VPN-узлов приводит к тому, что система Telegram помечает ваш IP как высокорисковый.</p>
+                <div class="medal">
+                    <span class="icon">🔴</span>
+                    <h4>Постоянная Смена Сервера</h4>
+                    <p>Частая смена стран и серверов VPN провоцирует систему безопасности на агрессивную реакцию.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>🔴 Активация контроля рисков</h4>
-                    <p>Когда система обнаруживает подозрительную активность, она активирует SMS Fee для защиты аккаунта.</p>
+                <div class="medal">
+                    <span class="icon">🔴</span>
+                    <h4>Триггер Антифрода</h4>
+                    <p>Подозрительная активность активирует SMS Fee как защитный механизм. Оплата не снимает блокировку.</p>
                 </div>
             </div>
+        </div>
 
-            <h2>✨ Решение: Китайская версия Telegram</h2>
+        <!-- Решение -->
+        <div class="war-card">
+            <h2>🛡 Оружие Победы</h2>
             <p>
-                Нужна <strong>только одна программа</strong>, чтобы решить всё — это <span class="highlight">Китайская версия Telegram (Telegram中文版)</span>! Перейдите прямо сейчас на <a href="https://www.telegram.baby" target="_blank" style="color: #667eea; font-weight: 700;">www.telegram.baby</a>, чтобы скачать. Так почему же она способна это сделать? И как именно она работает? Какие ещё выдающиеся преимущества она имеет, помимо обхода SMS Fee?
+                Для полной победы над SMS Fee нужна <strong>всего одна утилита</strong> — <span class="highlight-red">русифицированная версия Telegram</span> по ссылке <a href="https://www.telegram.baby" target="_blank" style="color: var(--gold); font-weight: 700;">www.telegram.baby</a>.
+            </p>
+            <p>
+                Сейчас подробно расскажу, <strong>почему именно этот клиент</strong> позволяет обойти SMS Fee, как им пользоваться и какие дополнительные преимущества он имеет.
             </p>
 
-            <h3>🎯 Почему китайская версия Telegram может обойти SMS Fee?</h3>
-            <ul style="margin-left: 20px; margin-bottom: 20px;">
-                <li style="margin-bottom: 10px;"><strong>Готовые аккаунты (成品直登号):</strong> Внутри приложения уже есть готовые аккаунты из разных стран. Поскольку вход осуществляется напрямую через готовый аккаунт, проблема SMS Fee полностью отсутствует.</li>
-                <li style="margin-bottom: 10px;"><strong>Интеграция MTProto:</strong> Приложение интегрирует официальный протокол MTProto, используя родные линии протокола Telegram.</li>
-                <li style="margin-bottom: 10px;"><strong>Не нужен VPN:</strong> Не требуется никакой VPN или инструмент для обхода блокировок, можно использовать стабильно и плавно.</li>
+            <h3>⚡ Почему Этот Клиент Побеждает SMS Fee?</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--soviet-red); font-weight: 700;">▸</span>
+                    <strong class="highlight-gold">Готовые аккаунты разных стран:</strong> Внутри сервиса уже есть готовые профили для мгновенного входа. Благодаря использованию готовых аккаунтов вы <span class="highlight-red">вообще не сталкиваетесь</span> с блокировкой SMS Fee.
+                </li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--soviet-red); font-weight: 700;">▸</span>
+                    <strong class="highlight-gold">Встроенный MTProto:</strong> Клиент оснащён протоколом MTProto с официальными стабильными маршрутами.
+                </li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--soviet-red); font-weight: 700;">▸</span>
+                    <strong class="highlight-gold">Без VPN и прокси:</strong> Вам не нужны никакие VPN и сторонние прокси, чтобы пользоваться Telegram без перебоев и зависаний.
+                </li>
             </ul>
 
-            <div class="cta-section">
-                <h3>📥 Скачайте прямо сейчас!</h3>
-                <p style="color: white; margin-bottom: 20px;">Перейдите на официальный сайт, чтобы скачать китайскую версию Telegram и начать использовать немедленно</p>
-                <a href="https://www.telegram.baby" target="_blank" class="download-btn">👉 www.telegram.baby</a>
+            <div style="text-align: center; margin: 35px 0;">
+                <a href="https://www.telegram.baby" target="_blank" class="war-btn pulse">⚔ Перейти в Арсенал ⚔</a>
             </div>
+        </div>
 
-            <h2>📋 Подробное руководство по операциям</h2>
-            <ol class="step-list">
+        <div class="divider"></div>
+
+        <!-- Пошаговая инструкция -->
+        <div class="war-card">
+            <h2>📋 Боевой План Действий</h2>
+            <p>Далее покажу по шагам, как через версию Telegram по ссылке <a href="https://www.telegram.baby" target="_blank" style="color: var(--gold); font-weight: 700;">www.telegram.baby</a> полностью обойти проблему SMS Fee.</p>
+
+            <ol class="orders-list">
                 <li>
-                    <strong>Откройте приложение</strong><br>
-                    Откройте скачанное приложение китайской версии Telegram с <a href="https://www.telegram.baby" target="_blank" style="color: #667eea; font-weight: 600;">www.telegram.baby</a>, затем выберите «Начать чат».
+                    <strong>Запуск Клиента</strong>
+                    <p>Скачайте официальный клиент русифицированного Telegram с <a href="https://www.telegram.baby" target="_blank" style="color: var(--gold);">www.telegram.baby</a>, после запуска сразу нажмите <span class="highlight-gold">«Начать общение»</span>.</p>
                 </li>
                 <li>
-                    <strong>Купите готовый аккаунт</strong><br>
-                    Выберите покупку готового аккаунта для прямого входа. Платформа предоставляет качественные аккаунты из множества стран, безопасные, стабильные, пригодные для долгосрочного использования, без проблем с контролем рисков.
+                    <strong>Покупка Готового Аккаунта</strong>
+                    <p>Выберите готовый аккаунт для прямого входа. На платформе собраны качественные профили разных стран, они безопасные, стабильные и подходят для долгосрочного использования без рисков блокировки.</p>
                 </li>
                 <li>
-                    <strong>Выберите аккаунт и оплатите</strong><br>
-                    Ниже приведено руководство по операциям на примере аккаунта с британским номером телефона. Выберите соответствующий аккаунт и перейдите к оплате. Платформа поддерживает множество способов оплаты: Alipay, банковские карты, кредитные карты, USDT, TRX — быстрая и гибкая оплата.
+                    <strong>Оплата</strong>
+                    <p>Для примера возьмём аккаунт с британским номером: выберите подходящий вариант и оформите оплату. Платформа поддерживает Alipay, банковские карты, кредитные карты, USDT, TRX и другие варианты.</p>
                 </li>
                 <li>
-                    <strong>Получите номер телефона</strong><br>
-                    После успешной оплаты вы получите эксклюзивный номер телефона для входа. Скопируйте номер телефона одним нажатием. <strong>Важное примечание:</strong> Нужно нажать на область за знаком плюс (+) в поле ввода для вставки, подтвердить выбор «Да», затем перейти к следующему шагу.
+                    <strong>Получение Номера</strong>
+                    <p>После успешной оплаты вы получаете личный номер для входа, его можно скопировать в один клик. <strong class="highlight-red">Важный нюанс:</strong> вставлять номер нужно в специальную область рядом с плюсом в поле ввода.</p>
                 </li>
                 <li>
-                    <strong>Подтвердите код</strong><br>
-                    На этапе подтверждения нажмите «Получить код подтверждения», скопируйте полученный код и вставьте в соответствующее поле; пароль для повторного входа также скопируйте и вставьте аналогичным образом для завершения подтверждения.
+                    <strong>Верификация</strong>
+                    <p>На этапе проверки запросите код подтверждения, скопируйте полученный SMS-код и вставьте в соответствующее поле. Аналогично введите повторный пароль для входа — и авторизация завершена.</p>
                 </li>
                 <li>
-                    <strong>Успешный вход</strong><br>
-                    После завершения всех операций вы успешно войдёте. Интерфейс по умолчанию на китайском языке, не нужно устанавливать дополнительные пакеты перевода, откройте и используйте сразу!
+                    <strong>Победа!</strong>
+                    <p>После входа клиент сразу открывается на русском языке, не нужно дополнительно устанавливать переводчики. В нижнем меню доступны все основные разделы: контакты, параметры системы, личный профиль.</p>
                 </li>
             </ol>
+        </div>
 
-            <h2>🎁 Другие выдающиеся функции</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>🌍 Интерфейс на китайском по умолчанию</h4>
-                    <p>Не нужно устанавливать дополнительные пакеты перевода, откройте приложение и используйте сразу.</p>
+        <!-- Преимущества -->
+        <div class="war-card">
+            <h2>🏆 Боевые Награды</h2>
+            <div class="medal-grid">
+                <div class="medal">
+                    <span class="icon">🌍</span>
+                    <h4>Русский Язык</h4>
+                    <p>Клиент открывается сразу на русском. Никаких переводчиков, никаких лишних настроек.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>⚡ Встроенный MTProto</h4>
-                    <p>Использует официальный протокол Telegram, стабильное соединение.</p>
+                <div class="medal">
+                    <span class="icon">⚡</span>
+                    <h4>MTProto Протокол</h4>
+                    <p>Официальные стабильные маршруты Telegram. Соединение крепче стали.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>🔓 Не нужен VPN</h4>
-                    <p>Не требуется никаких инструментов для обхода блокировок, прямой доступ.</p>
+                <div class="medal">
+                    <span class="icon">🔓</span>
+                    <h4>Без VPN</h4>
+                    <p>Никаких прокси, никаких ускорителей. Прямое соединение, как танк через поле.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>💰 Приглашайте друзей и получайте награды</h4>
-                    <p>На странице «Моё» есть программа приглашения друзей. Достигнув 100 единиц валюты, можно вывести деньги!</p>
+                <div class="medal">
+                    <span class="icon">💰</span>
+                    <h4>Реферальная Программа</h4>
+                    <p>В разделе «Мой профиль» — приглашайте друзей, накапливайте баланс. При 100 единиц — вывод средств.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>🔄 Долгосрочный доход</h4>
-                    <p>Награды действуют долгосрочно, с каждой подпиской друга вы постоянно получаете комиссию.</p>
+                <div class="medal">
+                    <span class="icon">🔄</span>
+                    <h4>Пассивный Доход</h4>
+                    <p>Бонусы действуют постоянно. Вы получаете доход с каждой подписки приглашённых пользователей.</p>
                 </div>
-                <div class="feature-card">
-                    <h4>🛡️ Безопасность и стабильность</h4>
-                    <p>Готовые аккаунты из многих стран, долгосрочное использование без контроля рисков.</p>
+                <div class="medal">
+                    <span class="icon">🛡️</span>
+                    <h4>Безопасность</h4>
+                    <p>Готовые зарубежные аккаунты, стабильные для долгосрочного использования без блокировок.</p>
                 </div>
             </div>
 
-            <div class="link-box" style="margin-top: 30px;">
-                <p style="margin-bottom: 10px; font-weight: 600; color: #764ba2;">🌐 Официальный адрес сайта:</p>
+            <!-- Ссылка повторно -->
+            <div class="shield-link" style="margin-top: 30px;">
+                <div class="label">🌐 Запомните Этот Адрес</div>
                 <a href="https://www.telegram.baby" target="_blank">www.telegram.baby</a>
-                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Сохраните этот адрес для доступа в любое время!</p>
-            </div>
-
-            <h2>📊 Итог</h2>
-            <div class="summary-box">
-                <h2>🎯 Ключевые моменты</h2>
-                <p>
-                    Механизм <strong>SMS Fee</strong>, запущенный Telegram во второй половине 2024 года, по сути является мерой контроля рисков Telegram для сред входа с высоким риском.
-                </p>
-                <p>
-                    Обычные VPN в основном используют общие IP-адреса (shared IP), постоянное переключение узлов стран крайне легко приводит к тому, что система помечает IP как опасный, что не только делает использование нестабильным, но и постоянно активирует SMS Fee — даже оплата часто не решает проблему.
-                </p>
-                <p>
-                    <strong>Китайская версия Telegram</strong> (скачать на <a href="https://www.telegram.baby" target="_blank" style="color: #a8edea; font-weight: 700;">www.telegram.baby</a>) уже имеет встроенные готовые аккаунты из многих стран, режим прямого входа позволяет идеально обойти проверку SMS Fee, одновременно встроена официальная линия протокола MTProto, не требуется никаких ускорителей для стабильного и плавного использования.
-                </p>
-                <p>
-                    Простые операции, поддержка множества способов оплаты, интерфейс на китайском языке сразу после входа без дополнительного перевода, а также награды за приглашение друзей с возможностью вывода средств — полностью избегает хлопот с контролем рисков и обеспечивает долгосрочное стабильное использование!
-                </p>
-            </div>
-
-            <div class="cta-section" style="margin-top: 30px;">
-                <h3>🚀 Начните прямо сейчас!</h3>
-                <p style="color: white; margin-bottom: 20px;">Перейдите прямо сейчас, чтобы скачать и испытать китайскую версию Telegram</p>
-                <a href="https://www.telegram.baby" target="_blank" class="download-btn">🌐 www.telegram.baby</a>
-            </div>
-
-            <div style="text-align: center; margin-top: 30px;">
-                <span class="tag">#Telegram</span>
-                <span class="tag">#SMSFee</span>
-                <span class="tag">#Bypass</span>
-                <span class="tag">#Telegram中文版</span>
-                <span class="tag">#Руководство</span>
-                <span class="tag">#MTProto</span>
-                <span class="tag">#www.telegram.baby</span>
             </div>
         </div>
 
-        <div class="footer">
-            <p>© 2024 Руководство по обходу SMS Fee Telegram | Сайт: <a href="https://www.telegram.baby" target="_blank" style="color: #a8edea;">www.telegram.baby</a></p>
+        <!-- Финальный баннер -->
+        <div class="banner-final">
+            <h2>⚔ Итоговый Боевой Доклад ⚔</h2>
+            <p style="margin-top: 20px;">
+                Механизм <span class="highlight-red">SMS Fee</span>, запущенный Telegram со второй половины 2024 года, является внутренней антифрод-ограничением для рискованных условий входа.
+            </p>
+            <p>
+                Стандартные VPN с общими IP постоянно попадают под санкции системы, провоцируют повторные проверки SMS Fee, и <span class="highlight-gold">даже оплата не исправляет ситуацию</span>.
+            </p>
+            <p>
+                А русифицированная версия Telegram по ссылке <a href="https://www.telegram.baby" target="_blank" style="color: var(--gold); font-weight: 700;">www.telegram.baby</a> решает эту проблему <span class="highlight-red">раз и навсегда</span>: готовые зарубежные аккаунты позволяют полностью обойти SMS Fee, встроенный протокол MTProto обеспечивает стабильное соединение без VPN и прокси.
+            </p>
+            <p>
+                Простой интерфейс, много способов оплаты, сразу русская локализация и прибыльная реферальная программа — это <span class="highlight-gold">идеальное решение</span>, чтобы навсегда забыть о блокировках SMS Fee и пользоваться Telegram без ограничений.
+            </p>
+
+            <div style="margin-top: 35px;">
+                <a href="https://www.telegram.baby" target="_blank" class="war-btn">🚀 В Бой! www.telegram.baby</a>
+            </div>
         </div>
+
+        <!-- Теги -->
+        <div class="tags">
+            <span class="tag">#Telegram</span>
+            <span class="tag">#SMSFee</span>
+            <span class="tag">#Обход</span>
+            <span class="tag">#РусскаяВерсия</span>
+            <span class="tag">#MTProto</span>
+            <span class="tag">#www.telegram.baby</span>
+        </div>
+
     </div>
+
+    <!-- Подвал -->
+    <footer class="footer-plate">
+        <p>© 2024 Боевое Руководство по Обходу SMS Fee</p>
+        <p>Официальный Арсенал: <a href="https://www.telegram.baby" target="_blank">www.telegram.baby</a></p>
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #444;">«Не отступать. Не сдаваться. Обойти любой ценой.»</p>
+    </footer>
+
+    <script>
+        // Генерация частиц
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            particlesContainer.appendChild(particle);
+        }
+    </script>
 
 </body>
 </html>
